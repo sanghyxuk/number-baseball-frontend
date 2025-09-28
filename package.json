@@ -58,9 +58,7 @@
     "analyze": "npx source-map-explorer 'build/static/js/*.js'",
 
     "clean": "rm -rf build node_modules/.cache",
-    "reinstall": "rm -rf node_modules package-lock.json && npm install",
-
-    "prepare": "husky install || true"
+    "reinstall": "rm -rf node_modules package-lock.json && npm install"
   },
   "eslintConfig": {
     "extends": [
