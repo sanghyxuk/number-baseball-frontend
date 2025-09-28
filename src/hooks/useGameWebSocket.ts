@@ -18,7 +18,7 @@ import {
 // WebSocket 연결 URL 생성
 const getWebSocketBaseUrl = () => {
     const envUrl = process.env.REACT_APP_WS_URL;
-    const defaultUrl = 'http://localhost:8080';
+    const defaultUrl = 'https://number-baseball-lefm.onrender.com';
     console.log('🔗 환경 변수 REACT_APP_WS_URL:', envUrl);
     console.log('🔗 기본 URL:', defaultUrl);
     return envUrl || defaultUrl;
