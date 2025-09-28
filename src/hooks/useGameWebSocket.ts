@@ -17,7 +17,11 @@ import {
 
 // WebSocket 연결 URL 생성
 const getWebSocketBaseUrl = () => {
-    return process.env.REACT_APP_WS_URL || 'ws://localhost:8080';
+    const envUrl = process.env.REACT_APP_WS_URL;
+    const defaultUrl = 'http://localhost:8080';
+    console.log('🔗 환경 변수 REACT_APP_WS_URL:', envUrl);
+    console.log('🔗 기본 URL:', defaultUrl);
+    return envUrl || defaultUrl;
 };
 
 const WS_BASE_URL = getWebSocketBaseUrl();
@@ -62,9 +66,12 @@ export function useGameWebSocket() {
         dispatch({ type: 'CONNECT_START' });
 
         try {
+            const fullWsUrl = `${WS_BASE_URL}${WS_ENDPOINT}`;
+            console.log('🔗 실제 WebSocket URL:', fullWsUrl);
+            
             // STOMP 클라이언트 생성 (새로운 방식)
             const client = new Client({
-                webSocketFactory: () => new SockJS(`${WS_BASE_URL}${WS_ENDPOINT}`),
+                webSocketFactory: () => new SockJS(fullWsUrl),
                 connectHeaders: {
                     'X-Player-Session-Id': sessionId
                 },
