@@ -1,0 +1,138 @@
+{
+  "name": "number-baseball-frontend",
+  "version": "1.0.0",
+  "description": "커플 전용 1:1 실시간 숫자야구 게임 - 프론트엔드",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.23",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4",
+
+    "@stomp/stompjs": "^7.0.0",
+    "sockjs-client": "^1.6.1",
+    "@types/sockjs-client": "^1.5.1",
+
+    "zustand": "^4.3.7",
+    "react-router-dom": "^6.10.0",
+    "@types/react-router-dom": "^5.3.3",
+    "clsx": "^1.2.1",
+    "lucide-react": "^0.220.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.0",
+    "postcss": "^8.4.21",
+    "autoprefixer": "^10.4.14",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "eslint": "^8.37.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.8.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+
+    "dev": "REACT_APP_ENV=development react-scripts start",
+    "build:dev": "REACT_APP_ENV=development react-scripts build",
+    "build:prod": "REACT_APP_ENV=production react-scripts build",
+
+    "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write src/**/*.{ts,tsx,css,json}",
+    "format:check": "prettier --check src/**/*.{ts,tsx,css,json}",
+    "type-check": "tsc --noEmit",
+
+    "preview": "npx serve -s build -l 3000",
+    "analyze": "npx source-map-explorer 'build/static/js/*.js'",
+
+    "clean": "rm -rf build node_modules/.cache",
+    "reinstall": "rm -rf node_modules package-lock.json && npm install",
+
+    "prepare": "husky install || true"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ],
+      "no-console": [
+        "warn",
+        {
+          "allow": ["warn", "error"]
+        }
+      ],
+      "react-hooks/exhaustive-deps": "warn",
+      "react/jsx-no-target-blank": "error",
+      "prefer-const": "error",
+      "no-var": "error"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "iOS >= 12",
+      "Safari >= 12",
+      "Chrome >= 88",
+      "Firefox >= 85",
+      "Edge >= 88"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version",
+      "iOS >= 12"
+    ]
+  },
+  "proxy": "http://localhost:8080",
+  "homepage": ".",
+  "author": {
+    "name": "Number Baseball Team",
+    "email": "contact@numberbaseball.com"
+  },
+  "keywords": [
+    "game",
+    "number-baseball",
+    "react",
+    "typescript",
+    "websocket",
+    "real-time",
+    "couple-game",
+    "ipad",
+    "tailwindcss",
+    "zustand"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/number-baseball-frontend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/number-baseball-frontend/issues"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 기본 스타일 재설정 */
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-game-bg text-gray-900 font-sans;
+    /* iPad에서 확대/축소 방지 */
+    touch-action: manipulation;
+  }
+
+  /* iPad 세로/가로 회전시 폰트 크기 자동 조정 방지 */
+  html, body {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* 터치 디바이스 최적화 */
+  button, input {
+    touch-action: manipulation;
+  }
+}
+
+/* 커스텀 컴포넌트 스타일 */
+@layer components {
+  /* 기본 버튼 스타일 */
+  .btn {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-200
+    active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    /* 터치 친화적 최소 크기 */
+    min-height: 48px;
+    min-width: 120px;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700
+    focus:ring-primary-500 disabled:bg-gray-400 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply btn bg-white text-gray-700 border-2 border-gray-300
+    hover:border-gray-400 focus:ring-gray-500;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700
+    focus:ring-red-500;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-lg;
+    min-height: 60px;
+    min-width: 160px;
+  }
+
+  /* 카드 스타일 */
+  .card {
+    @apply bg-game-card rounded-xl shadow-lg border border-gray-200;
+  }
+
+  .card-padding {
+    @apply p-6 ipad:p-8;
+  }
+
+  /* 입력 필드 스타일 */
+  .input {
+    @apply w-full px-4 py-3 border-2 border-gray-300 rounded-lg
+    focus:border-primary-500 focus:outline-none text-lg
+    disabled:bg-gray-100 disabled:cursor-not-allowed;
+    min-height: 48px;
+  }
+
+  /* 게임 숫자 입력 스타일 */
+  .number-input {
+    @apply text-center text-2xl font-mono tracking-wider;
+  }
+
+  /* 턴 표시 스타일 */
+  .turn-indicator {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .turn-active {
+    @apply turn-indicator bg-primary-100 text-primary-800 animate-pulse-slow;
+  }
+
+  .turn-waiting {
+    @apply turn-indicator bg-gray-100 text-gray-600;
+  }
+
+  /* 게임 결과 스타일 */
+  .result-strike {
+    @apply text-game-strike font-bold;
+  }
+
+  .result-ball {
+    @apply text-game-ball font-bold;
+  }
+
+  .result-out {
+    @apply text-game-out;
+  }
+
+  /* 반응형 컨테이너 */
+  .container-game {
+    @apply max-w-md mx-auto px-4 py-6
+    ipad:max-w-2xl ipad:px-8 ipad:py-8
+    ipad-pro:max-w-4xl;
+  }
+
+  /* 게임 그리드 */
+  .game-grid {
+    @apply grid gap-4
+    grid-cols-1
+    ipad:grid-cols-2
+    ipad-pro:grid-cols-3;
+  }
+
+  /* 키패드 스타일 */
+  .keypad {
+    @apply grid grid-cols-3 gap-3 max-w-xs mx-auto;
+  }
+
+  .keypad-btn {
+    @apply btn text-xl font-bold bg-white border-2 border-gray-300
+    hover:border-primary-500 hover:bg-primary-50
+    active:bg-primary-100;
+    min-height: 60px;
+    min-width: 60px;
+  }
+}
+
+/* 유틸리티 클래스 */
+@layer utilities {
+  /* 터치 디바이스 최적화 */
+  .touch-none {
+    touch-action: none;
+  }
+
+  .touch-pan-x {
+    touch-action: pan-x;
+  }
+
+  .touch-pan-y {
+    touch-action: pan-y;
+  }
+
+  /* 텍스트 선택 방지 */
+  .select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* iPad 안전 영역 */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
