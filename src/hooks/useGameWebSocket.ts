@@ -56,8 +56,17 @@ export function useGameWebSocket() {
             return;
         }
 
-        if (clientRef.current?.connected || isConnecting || connectionAttemptRef.current) {
-            console.log('✅ 이미 WebSocket에 연결되어 있거나 연결 중입니다.');
+        // 기존 연결이 있으면 먼저 정리
+        if (clientRef.current) {
+            if (clientRef.current.connected) {
+                console.log('🔄 기존 WebSocket 연결을 종료하고 새로 연결합니다.');
+                clientRef.current.deactivate();
+            }
+            clientRef.current = null;
+        }
+
+        if (isConnecting || connectionAttemptRef.current) {
+            console.log('⏳ WebSocket 연결 시도 중입니다.');
             return;
         }
 
@@ -75,7 +84,7 @@ export function useGameWebSocket() {
                 connectHeaders: {
                     'X-Player-Session-Id': sessionId
                 },
-                debug: process.env.NODE_ENV === 'development' ? console.log : undefined,
+                debug: process.env.NODE_ENV === 'development' ? (str: string) => console.log(str) : () => {},
                 reconnectDelay: 5000,
                 heartbeatIncoming: 4000,
                 heartbeatOutgoing: 4000,
@@ -121,25 +130,33 @@ export function useGameWebSocket() {
 
     // WebSocket 연결 해제
     const disconnect = useCallback(() => {
-        if (clientRef.current?.connected) {
-            console.log('🔌 WebSocket 연결 해제...');
+        console.log('🔌 WebSocket 연결 해제 시도...');
+        
+        connectionAttemptRef.current = false;
+        
+        if (clientRef.current) {
+            try {
+                // 구독 해제
+                subscriptionsRef.current.forEach(id => {
+                    try {
+                        clientRef.current?.unsubscribe(id);
+                    } catch (error) {
+                        console.warn('구독 해제 실패:', id, error);
+                    }
+                });
+                subscriptionsRef.current = [];
 
-            // 구독 해제
-            subscriptionsRef.current.forEach(id => {
-                try {
-                    clientRef.current?.unsubscribe(id);
-                } catch (error) {
-                    console.warn('구독 해제 실패:', id, error);
+                // 연결 해제
+                if (clientRef.current.connected) {
+                    clientRef.current.deactivate();
                 }
-            });
-            subscriptionsRef.current = [];
-
-            // 연결 해제
-            clientRef.current.deactivate();
-            clientRef.current = null;
+            } catch (error) {
+                console.warn('⚠️ WebSocket 연결 해제 중 오류:', error);
+            } finally {
+                clientRef.current = null;
+            }
         }
 
-        connectionAttemptRef.current = false;
         dispatch({ type: 'DISCONNECT' });
     }, [dispatch]);
 
